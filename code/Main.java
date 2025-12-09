@@ -33,4 +33,8 @@ public class Main {
             
         }
     }
+    public void displayPersonInfo(Person player) {
+        System.out.println("Player Information:");
+        System.out.println(player.toString()); // Assuming the Person class has a toString() method
+    }
 }
