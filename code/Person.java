@@ -11,7 +11,7 @@ class Person {
         name = theName;
         energy = 100;
         health = 100;
-        System.out.println("Welcome " + name + " to the apocalypse!");
+        System.out.println("Welcome " + name + " to the zombie apocalypse!");
     }
     public void printInfo() {
         System.out.println("Player Information:");
