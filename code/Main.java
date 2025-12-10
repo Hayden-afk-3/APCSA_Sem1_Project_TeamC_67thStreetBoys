@@ -24,17 +24,14 @@ public class Main {
                 break;
             case 2:
                 player = new Medic(name);
+                player.printInfo();
+                ((Medic) player).heal();
+                player.printInfo();
                 break;
             case 3:
                 player = new Warrior(name);
                 break;
         }
-        for (int nights = 1; nights <= 10; nights++) {
-            
-        }
-    }
-    public void displayPersonInfo(Person player) {
-        System.out.println("Player Information:");
-        System.out.println(player.toString()); // Assuming the Person class has a toString() method
+        
     }
 }

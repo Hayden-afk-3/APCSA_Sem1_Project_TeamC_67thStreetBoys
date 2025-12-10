@@ -13,11 +13,11 @@ class Person {
         health = 100;
         System.out.println("Welcome " + name + " to the zombie apocalypse!");
     }
-    public void toString(Person player) {
+    public void printInfo() {
         System.out.println("Player Information:");
-        System.out.println("Name: " + player.getName());
-        System.out.println("Energy: " + player.getEnergy());
-        System.out.println("Health: " + player.getHealth());
+        System.out.println("Name: " + this.getName());
+        System.out.println("Energy: " + this.getEnergy());
+        System.out.println("Health: " + this.getHealth()+"\n");
     }
     public String getName() {
         return name;
@@ -27,6 +27,9 @@ class Person {
     }
     public int getHealth(){
         return health;
+    }
+    public void setHealth(int newHealth){
+        this.health = newHealth;
     }
 
 }
