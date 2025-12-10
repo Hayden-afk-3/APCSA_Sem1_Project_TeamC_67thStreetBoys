@@ -16,7 +16,7 @@ public class Main {
             role = input.nextInt();
         }
 
-        Person player;
+        Person player = null;
 
         switch (role) {
             case 1:
@@ -24,18 +24,18 @@ public class Main {
                 break;
             case 2:
                 player = new Medic(name);
-                player.printInfo();
-                ((Medic) player).heal();
-                player.printInfo();
                 break;
             case 3:
                 player = new Warrior(name);
                 break;
         }
+        System.out.println("Your player has found a weapon!");
+        player.setWeapon(new Weapon(5));
+        player.weaponInfo();
         while (true) {
             // Game loop logic goes here
             nights++;
-            if (health <= 0 || energy <= 0) {
+            if (player.getHealth() <= 0 || player.getEnergy() <= 0) {
                 System.out.println("Game Over! You survived " + nights + " nights.");
                 break;
             }
