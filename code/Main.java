@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
-
+        int nights = 0;
         System.out.println("Enter your name: ");
         String name = input.nextLine();
         System.out.println("What character do you want to be?");
@@ -24,17 +24,21 @@ public class Main {
                 break;
             case 2:
                 player = new Medic(name);
+                player.printInfo();
+                ((Medic) player).heal();
+                player.printInfo();
                 break;
             case 3:
                 player = new Warrior(name);
                 break;
         }
-        for (int nights = 1; nights <= 10; nights++) {
-            
+        while (true) {
+            // Game loop logic goes here
+            nights++;
+            if (health <= 0 || energy <= 0) {
+                System.out.println("Game Over! You survived " + nights + " nights.");
+                break;
+            }
         }
-    }
-    public void displayPersonInfo(Person player) {
-        System.out.println("Player Information:");
-        System.out.println(player.toString()); // Assuming the Person class has a toString() method
     }
 }
