@@ -14,16 +14,26 @@ class Scavenger extends Person{
         int options = (int)(Math.random()*3);
         switch (options) {
             case 0:
-                this.setHealth(this.getHealth() + 20);
-                System.out.println("You went to Bass Pro Shop and found food! Energy -15, Health +20.");
+                this.setHealth(this.getHealth() + 15);
+                System.out.println("You went to Bass Pro Shop and found food! Energy -15, Health + 15.");
                 break;
             case 1:
-                System.out.println(
-                    "You went to Bass Pro shop and found a new weapon!");
-                break;
+                System.out.println("You went to Bass Pro shop and found a new weapon!");
+                int newDamage = (int)(Math.random()*7+1);
+                System.out.println("New weapon damage: " + newDamage);
+                System.out.println("Old weapon damage: " + this.weapon.getDamage());
+                System.out.println("Do you want to equip the new weapon? (1 for yes, 2 for no)");
+                int newWeaponChoice = input.nextInt();
+                if (newWeaponChoice == 1){
+                    System.out.println("You have equipped the new weapon.");
+                    this.setWeapon(new Weapon(newDamage));
+                }
+                else {
+                    System.out.println("You decided to keep your old weapon.");
+                    break;
+                }
             case 2:
-                this.setHealth(this.getHealth() + 25);
-                System.out.println("You went to Bass Pro Shop! Energy -15, Health +25.");
+                System.out.println("You went to Bass Pro Shop and found nothing. Energy -15.");
                 break;
             }
         }
