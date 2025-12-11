@@ -21,5 +21,5 @@ Team member roles:
   * Programming Lead
 * Hayden D
   * Quality Assurance Tester
-* Krishan
+* Krishan A
   * Technical Writer
