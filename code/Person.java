@@ -38,6 +38,9 @@ abstract class Person {
     public void setWeapon(Weapon newWeapon){
         this.weapon = newWeapon;
     }
+    public Weapon getWeapon(){
+        return this.weapon;
+    }
     public void weaponInfo() {
         System.out.println("Weapon Information:");
         System.out.println("\tName: " + this.weapon.getName());

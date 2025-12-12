@@ -5,11 +5,14 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
-        int nights = 0;
+        int day = 0;
         String choice = "";
+        boolean gameOver = false;
+
         System.out.println("Enter your name: ");
         String name = input.nextLine();
         clear();
+
         System.out.println("What character do you want to be?");
         System.out.println("1. Scavenger\n2. Medic\n3. Warrior");
         int role = input.nextInt();
@@ -30,12 +33,19 @@ public class Main {
                 break;
         }
         clear();
+
         System.out.println("Your player has found a weapon!");
         player.setWeapon(new Weapon(5));
         player.weaponInfo();
         continueGame();
-        player.personStatus();
-        player.printActivityList();
+
+        while (!gameOver){
+            System.out.println("Day " + day);
+            player.personStatus();
+            player.printActivityList();
+            input.nextLine();
+        }
+        input.close();
     }
     public static void clear() {
         System.out.print("\033[H\033[2J");
@@ -46,5 +56,6 @@ public class Main {
         System.out.println("Press Enter to continue...");
         input.nextLine();
         clear();
+        input.close();
     }
 }

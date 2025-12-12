@@ -31,7 +31,7 @@ class Scavenger extends Person{
                 System.out.println("You went to Bass Pro shop and found a new weapon!");
                 int newDamage = (int)(Math.random()*7+1);
                 System.out.println("New weapon damage: " + newDamage);
-                System.out.println("Old weapon damage: " + this.weapon.getDamage());
+                System.out.println("Old weapon damage: " + this.getWeapon().getDamage());
                 System.out.println("Do you want to equip the new weapon? (1 for yes, 2 for no)");
                 int newWeaponChoice = input.nextInt();
                 if (newWeaponChoice == 1){
