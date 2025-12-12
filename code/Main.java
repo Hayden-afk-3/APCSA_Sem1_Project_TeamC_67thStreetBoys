@@ -29,17 +29,13 @@ public class Main {
                 player = new Warrior(name);
                 break;
         }
-        continueGame();
+        clear();
         System.out.println("Your player has found a weapon!");
         player.setWeapon(new Weapon(5));
         player.weaponInfo();
         continueGame();
+        player.personStatus();
         player.printActivityList();
-        while (true) {
-            // Game loop logic goes here
-            System.out.println();
-            input.nextLine();
-        }
     }
     public static void clear() {
         System.out.print("\033[H\033[2J");

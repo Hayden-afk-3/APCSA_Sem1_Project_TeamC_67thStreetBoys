@@ -1,6 +1,7 @@
 package code;
 class Medic extends Person{
     private  String[] activityListClass = {"Heal Self"};
+    private  String[] activityListExplainClass = {"Regain Health"};
     public Medic(String theName) {
         super(theName);
     }
@@ -19,5 +20,9 @@ class Medic extends Person{
     @Override
     public String[] getActivityListClass() {
         return activityListClass;
+    }
+    @Override
+    public String[] getActivityListExplainClass() {
+        return activityListExplainClass;
     }
 }

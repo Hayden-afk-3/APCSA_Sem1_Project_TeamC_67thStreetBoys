@@ -1,12 +1,17 @@
 package code;
 class Scavenger extends Person{
-    private  String[] activityListClass = {"Scavenge Bass Pro"};
+    private  String[] activityListClass = {"Scavenge Bass Pro Shops"};
+    private  String[] activityListExplainClass = {"High chance to find good loot. High possibility of finding zombies."};
     public Scavenger(String theName) {
         super(theName);
     }
     @Override
     public String[] getActivityListClass() {
         return activityListClass;
+    }
+    @Override
+    public String[] getActivityListExplainClass() {
+        return activityListExplainClass;
     }
     public void bassProShop(){
         if(this.getEnergy() < 15){
