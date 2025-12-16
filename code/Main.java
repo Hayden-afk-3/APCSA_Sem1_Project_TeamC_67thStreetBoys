@@ -33,7 +33,7 @@ public class Main {
         }
         clear();
 
-        System.out.println("Your player has found a weapon!");
+        System.out.println(name + " has found a weapon!");
         player.setWeapon(new Weapon(5));
         player.weaponInfo();
         continueGame();
@@ -42,7 +42,9 @@ public class Main {
             System.out.println("Day " + day);
             player.personStatus();
             player.printActivityList();
+            System.out.print("Activity #: ");
             choice = input.nextInt();
+            player.parseActivity(choice);
             continueGame();
             
             player.sleep();
@@ -55,8 +57,9 @@ public class Main {
         System.out.flush();
     }
     public static void continueGame(){
+        input.nextLine();
         System.out.print("Press Enter to continue...");
         input.nextLine();
-        //clear();
+        clear();
     }
 }
