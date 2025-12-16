@@ -1,14 +1,11 @@
 package code;
 
-import java.util.Scanner;
-
 abstract class Person {
     private String name;
     private int energy;
     private int health;
     private int satiation;
     private Weapon weapon;
-    Scanner input = new Scanner(System.in);
     public static String[] activityList = {"Scavenge Walmart","Take a Nap"};
     public static String[] activityListExplain = {"Attempt to loot. Possibility of finding zombies.","Regain Energy"};
 
@@ -87,5 +84,8 @@ abstract class Person {
             System.out.println("\t" + i + ": " + this.getActivityListClass()[i-1-activityList.length]);
             System.out.println("\t\t" + this.getActivityListExplainClass()[i-1-activityList.length]);
         }
+    }
+    public void zombieFight() {
+
     }
 }
