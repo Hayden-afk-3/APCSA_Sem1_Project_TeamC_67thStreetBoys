@@ -62,9 +62,19 @@ abstract class Person {
         this.energy = newEnergy;
     }
     public void sleep(){
+        System.out.println(this.name + " starts to fall asleep.");
+        int startEnergy = this.energy;
+        int startHealth = this.health;
+        int startSatiation = this.satiation;
+
         this.energy = (int)(Math.random()*((this.energy/2.0+49)-this.energy+1)+this.energy);
         this.health = (int)(Math.random()*(-0.0109*(this.health-100)*(this.health-100)+99-this.health+1)+this.health);
         this.satiation = (int)(Math.random()*(0.85*(this.satiation-10)-this.satiation+1)+this.satiation);
+
+        System.out.println("You feel rested.");
+        System.out.println("\tHealth: " + startHealth + " +" + (this.health-startHealth) + " --> " + this.health);
+        System.out.println("\tEnergy: " + startEnergy + " +" + (this.energy-startEnergy) + " --> " + this.energy);
+        System.out.println("\tSatiation: " + startSatiation + " -" + (startSatiation-this.satiation) + " --> " + this.satiation);
     }
     public void setSatiation(int newSatiation){
         this.satiation = newSatiation;
@@ -72,6 +82,18 @@ abstract class Person {
     public void scavengeWalmart(){
     }
     public void takeANap(){
+        System.out.println(this.name + " starts to take a nap.");
+        int startEnergy = this.energy;
+        int startHealth = this.health;
+        int startSatiation = this.satiation;
+
+        this.energy = (int)(Math.random()*((this.energy/2.0+49)-this.energy+1)+this.energy);
+        this.health = (int)(Math.random()*(-0.0109*(this.health-100)*(this.health-100)+99-this.health+1)+this.health);
+        this.satiation = (int)(Math.random()*(0.85*(this.satiation-10)-this.satiation+1)+this.satiation);
+
+        System.out.println("You feel rested.");
+        System.out.println("\tHealth: " + startHealth + " +" + (this.health-startHealth) + " --> " + this.health);
+        System.out.println("\tEnergy: " + startEnergy + " +" + (this.energy-startEnergy) + " --> " + this.energy);
     }
     public void printActivityList(){
         int i = 1;
@@ -86,7 +108,10 @@ abstract class Person {
         }
     }
     public void zombieFight(int day) {
-        System.out.println("You ran into a zombie!");
+        int startHealth = this.health;
+        int totalDamage = 0;
+        int energyLoss = 0;
+        System.out.println(this.name + " ran into a zombie!");
         Zombie zombie = new Zombie((int)(5*Math.log(day)+4),(int)(4*Math.log(day)+2));
         while (zombie.getHealth()>0){
             int zombieAttack = (int)(zombie.getDamage()*(0.5*Math.random()+0.75));
@@ -95,9 +120,14 @@ abstract class Person {
             }
             System.out.println("Zombie attacks!\n\t"+this.name+"'s Health: "+this.health+" -" + zombieAttack);
             this.health -= zombieAttack;
+            totalDamage += zombieAttack;
+            energyLoss += 2;
             int playerAttack = (int)(this.weapon.getDamage()*(0.5*Math.random()+0.75));
-            System.out.println("Player attacks!\n\t"+this.name+"'s Health: "+this.health+" -" + playerAttack);
+            System.out.println(this.name + " attacks!\n\t"+this.name+"'s Health: "+this.health+" -" + playerAttack);
             zombie.setHealth(zombie.getHealth()-playerAttack);
         }
+        System.out.println("You killed the zombie!");
+        System.out.println("\tHealth: " + startHealth + " -" + totalDamage + " --> " + this.health);
+        System.out.println("\tEnergy: " + this.energy + " -" + energyLoss + " --> " + (this.energy-energyLoss));
     }
 }

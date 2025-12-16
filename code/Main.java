@@ -48,7 +48,7 @@ public class Main {
             System.out.print("Activity #: ");
             choice = input.nextInt();
             player.parseActivity(choice);
-            player.zombieFight(day);
+
             if (player.getHealth()<=0){
                 System.out.println(player.getName()+" has ran out of health! \nThey fell over and died from their injuries on Day " + day + ".");
                 break;
@@ -56,6 +56,7 @@ public class Main {
             continueGame();
             
             player.sleep();
+            continueGame();
             day++;
         }
         input.close();
