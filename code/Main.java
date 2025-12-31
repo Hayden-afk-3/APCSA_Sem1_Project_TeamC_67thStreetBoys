@@ -72,7 +72,7 @@ public class Main {
                 System.out.println(player.getName()+" has ran out of health! \nThey fell over and died from their injuries on Day " + day + ".");
                 break;
             }
-            continueGame();
+            continueGameQuick();
             
             // player sleep method increases stats and day increments
             player.sleep();
@@ -94,7 +94,15 @@ public class Main {
      * pauses game until user presses enter
      */
     public static void continueGame(){
+        System.out.print("Press Enter to continue...");
+        String consumeResponse = input.nextLine();
         input.nextLine();
+        clear();
+    }
+    /**
+     * pauses game until user presses enter, without extra input safety net
+     */
+    public static void continueGameQuick(){
         System.out.print("Press Enter to continue...");
         input.nextLine();
         clear();

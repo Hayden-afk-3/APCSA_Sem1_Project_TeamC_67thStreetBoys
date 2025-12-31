@@ -1,12 +1,18 @@
 package code;
 
+import java.util.Scanner;
+
 abstract class Person {
+    // initializes scanner for all methods to use in class
+    private static final Scanner input = new Scanner(System.in);
+
     // initialize instance variables
     private String name;
     private int energy;
     private int health;
     private int satiation;
     private Weapon weapon;
+    private int day;
     public static String[] activityList = {"Scavenge Walmart","Take a Nap"};
     public static String[] activityListExplain = {"Attempt to loot. Possibility of finding zombies.","Regain Energy"};
 
@@ -24,18 +30,22 @@ abstract class Person {
         energy = (int)(Math.random()*(99-60+1)+60); // 60-99
         health = (int)(Math.random()*(89-70+1)+70); // 70-89
         satiation = (int)(Math.random()*(69-40+1)+40); // 40-69
+        day = 1;
     }
 
     /**
-     * Prints the person's information, essentialy a toString method
+     * Prints the person's information
      * Specifically used for development, as it shows all player info
+     * @return string representation of person
      */
-    public void personInfo() {
+    @Override
+    public String toString() {
         System.out.println("Player Information:");
         System.out.println("\tName: " + this.getName());
         System.out.println("\tEnergy: " + this.getEnergy());
         System.out.println("\tHealth: " + this.getHealth());
         System.out.println("\tSatiation: " + this.getSatiation());
+        return "Player Information:\n"+"\tName: " + this.getName()+"\n\tEnergy: " + this.getEnergy()+"\n\tHealth: " + this.getHealth()+"\n\tSatiation: " + this.getSatiation();
     }
 
     /**
@@ -131,6 +141,7 @@ abstract class Person {
         System.out.println("\tHealth: " + startHealth + " +" + (this.health-startHealth) + " --> " + this.health);
         System.out.println("\tEnergy: " + startEnergy + " +" + (this.energy-startEnergy) + " --> " + this.energy);
         System.out.println("\tSatiation: " + startSatiation + " -" + (startSatiation-this.satiation) + " --> " + this.satiation);
+        day++;
     }
 
     /**
@@ -145,12 +156,94 @@ abstract class Person {
      * Simulates scavenging Walmart
      */
     public void scavengeWalmart(){
-        System.out.println(this.name + " starts to scavenge Walmart.");
+        System.out.println(this.name + " enters Walmart.");
         int startHealth = this.health;
         int startEnergy = this.energy;
         int startSatiation = this.satiation;
 
-        System.out.println("Would you like to look for \n\t1. Food\n\t2. Weapon\n\t3. Supplies");
+        System.out.println("Would you like to look for... \n\t1. Food\n\t2. Weapon\n\t3. Drugs");
+        int response = input.nextInt();
+        System.out.println("You start to look around...");
+        // split outputs based on what player is looking for
+        switch (response){
+            case 1:
+                if (Math.random() < 0.8){
+                    // initialize arrays for random food generation
+                    String[] verbs = {
+                            "delicious", "savory", "flavorful", "tasty", "fresh", "juicy", "crispy", "tender", "rich", "sweet", "bland", "stale", "greasy", "burnt", "soggy", "overcooked", "undercooked", "dry", "mushy", "bitter", "slimy", "rubbery", "gritty", "chalky", "stringy", "metallic", "fishy", "spongy", "gelatinous", "foamy", "moist"
+                    };
+                    String[] foods = {
+                            "can of beans", "instant noodles", "protein bar", "bag of rice", "can of soup", "box of cereal", "piece of stale bread", "peanut butter", "crackers", "granola bar", "mystery meat", "expired yogurt", "freeze-dried meal", "spam", "canned tuna", "ramen packet", "powdered milk", "trail mix", "energy bar", "canned fruit", "apple", "banana", "orange", "pear", "carrot", "broccoli", "lettuce", "spinach", "potato", "onion", "bell pepper", "tomato", "zucchini", "corn", "cucumber", "cabbage"
+                    };
+                    // generates a name of format [verb] [food]
+                    String foodItem = verbs[(int)(Math.random()*verbs.length)] + " " + foods[(int)(Math.random()*foods.length)];
+                    System.out.println(name + " finds and eats a " + foodItem +"!");
+
+                    // adds random int (5-20) to satiation
+                    this.satiation = startSatiation + (int)(Math.random()*(20-5+1)+5);
+
+                    // notifies user of increase
+                    System.out.println("\tSatiation: " + startSatiation + " +" + (this.satiation-startSatiation) + " --> " + this.satiation);
+                }
+                else {
+                    System.out.println(name + " searches a food aisle, but finds nothing and decides to leave.");
+                }
+                break;
+            case 2:
+                if (Math.random() < 0.3){
+                    Weapon walmartWeapon = new Weapon((int)((Math.random()+0.5)*(5*Math.log(day)+5)));
+                    System.out.println(name + " has found a weapon!");
+                    System.out.println("Current weapon:");
+                    weapon.weaponInfo();
+                    System.out.println("Found weapon:");
+                    walmartWeapon.weaponInfo();
+                    System.out.println("Would you like to switch? ");
+                    input.nextLine();
+                    String switchResponse = input.nextLine();
+                    switch (switchResponse){
+                        case "Yes", "yes", "y":
+                            System.out.println("You are now the proud owner of a " + walmartWeapon.getName() + "!");
+                            this.setWeapon(walmartWeapon);
+                            break;
+                        case "No", "no", "n":
+                            System.out.println("You drop the weapon on the ground and forget about it.");
+                            break;
+                    }
+
+                }
+                else {
+                    System.out.println(name + " finds nothing but empty shelves and decides to go home.");
+                }
+                break;
+            case 3:
+                if (Math.random() < 0.5){
+                    // initialize arrays for random drug generation
+                    String[] verbs = {
+                            "sealed", "unsealed", "cracked", "broken", "dusty", "clean", "sticky", "rusted", "half-empty", "full", "moist", "intact", "unlabeled", "expired", "torn", "smashed", "moldy", "water-damaged", "warped", "pristine"
+                    };
+                    String[] containers = {
+                            "bottle", "pouch", "bag", "container", "bottle"
+                    };
+                    String[] drugs = {
+                            "ibuprofen", "acetaminophen", "amoxicillin", "prednisone", "metformin", "atorvastatin", "lisinopril", "sertraline", "omeprazole", "alprazolam", "Zombexin", "Neurodex", "Viroquel", "Panacure", "AdrenaMax", "Restoril-X", "Hexamycin", "Vitalex", "Regenzol", "Rhino Pill", "Advil", "Motrin", "Tylenol", "Aleve", "Augmentin", "Zithromax", "Keflex", "Zoloft", "Prozac", "Lexapro", "Xanax", "Lipitor", "Crestor", "Norvasc", "Prilosec", "Nexium", "Claritin", "Zyrtec", "Adderall", "Vicodin", "Percocet", "Benadryl"
+                    };
+                    // generates a name of format [verb] [container] of [drug]
+                    String drugItem = verbs[(int)(Math.random()*verbs.length)] + " " + containers[(int)(Math.random()*containers.length)] + " of " + drugs[(int)(Math.random()*drugs.length)];
+                    System.out.println(name + " finds a " + drugItem +" and swallows one!");
+
+                    // adds random int (5-20) to satiation
+                    this.health = startHealth + (int)(Math.pow(Math.random(),2)*(50-5+1)+5);
+
+                    // notifies user of increase
+                    System.out.println("\tHealth: " + startHealth + " +" + (this.health-startHealth) + " --> " + this.health);
+                }
+                else {
+                    System.out.println(name + " searches the pharmacy, but finds nothing and decides to leave.");
+                }
+                break;
+        }
+        this.satiation = startSatiation - (int)(Math.random()*(10-1+1)+1);
+        System.out.println("\tEnergy: " + startSatiation + " -" + (startSatiation-this.satiation) + " --> " + this.satiation);
     }
 
     /**
@@ -196,18 +289,25 @@ abstract class Person {
         int totalDamage = 0;
         int energyLoss = 0;
         System.out.println(this.name + " ran into a zombie!");
+        if (day <= 5){
+            //String consumeResponse = input.nextLine();
+            System.out.print("Use your Enter key to move through the interaction! ");
+            input.nextLine();
+        }
         Zombie zombie = new Zombie((int)(5*Math.log(day)+4),(int)(4*Math.log(day)+2));
         while (zombie.getHealth()>0){
             int zombieAttack = (int)(zombie.getDamage()*(0.5*Math.random()+0.75));
             if (this.health-zombieAttack<0){
                 break;
             }
-            System.out.println("Zombie attacks!\n\t"+this.name+"'s Health: "+this.health+" -" + zombieAttack);
+            System.out.print("Zombie attacks!\n\t"+this.name+"'s Health: "+this.health+" -" + zombieAttack);
+            input.nextLine();
             this.health -= zombieAttack;
             totalDamage += zombieAttack;
             energyLoss += 2;
             int playerAttack = (int)(this.weapon.getDamage()*(0.5*Math.random()+0.75));
-            System.out.println(this.name + " attacks!\n\tZombie's Health: "+zombie.getHealth()+" -" + playerAttack);
+            System.out.print(this.name + " attacks!\n\tZombie's Health: "+zombie.getHealth()+" -" + playerAttack);
+            input.nextLine();
             zombie.setHealth(zombie.getHealth()-playerAttack);
         }
         System.out.println(this.name + " killed the zombie!");
