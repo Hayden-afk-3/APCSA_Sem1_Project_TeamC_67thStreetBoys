@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 abstract class Person {
     // initializes scanner for all methods to use in class
-    private static final Scanner input = new Scanner(System.in);
+    public static final Scanner input = new Scanner(System.in);
 
     // initialize instance variables
     private String name;
@@ -12,9 +12,9 @@ abstract class Person {
     private int health;
     private int satiation;
     private Weapon weapon;
-    private int day;
+    public int day;
     public static String[] activityList = {"Scavenge Walmart","Take a Nap"};
-    public static String[] activityListExplain = {"Attempt to loot. Possibility of finding zombies.","Regain Energy"};
+    public static String[] activityListExplain = {"Attempt to loot a walmart.","Regain Energy"};
 
     // initialize abstract methods to be implemented specifically in subclasses
     public abstract String[] getActivityListClass();
@@ -135,7 +135,7 @@ abstract class Person {
 
         this.energy = (int)(Math.random()*((this.energy/2.0+49)-this.energy+1)+this.energy);
         this.health = (int)(Math.random()*(-0.0109*(this.health-100)*(this.health-100)+99-this.health+1)+this.health);
-        this.satiation = (int)(Math.random()*(0.85*(this.satiation-10)-this.satiation+1)+this.satiation);
+        this.satiation = (int)(Math.random()*(0.8*(this.satiation-10)-this.satiation+1)+this.satiation);
 
         System.out.println(this.name + " feels rested.");
         System.out.println("\tHealth: " + startHealth + " +" + (this.health-startHealth) + " --> " + this.health);
@@ -161,13 +161,13 @@ abstract class Person {
         int startEnergy = this.energy;
         int startSatiation = this.satiation;
 
-        System.out.println("Would you like to look for... \n\t1. Food\n\t2. Weapon\n\t3. Drugs");
+        System.out.println("Would you like to look for... \n\t1. Food (90%)\n\t2. Weapons (30%)\n\t3. Drugs (50%)");
         int response = input.nextInt();
-        System.out.println("You start to look around...");
+        System.out.println(name + " starts to look around...");
         // split outputs based on what player is looking for
         switch (response){
             case 1:
-                if (Math.random() < 0.8){
+                if (Math.random() < 0.9){
                     // initialize arrays for random food generation
                     String[] verbs = {
                             "delicious", "savory", "flavorful", "tasty", "fresh", "juicy", "crispy", "tender", "rich", "sweet", "bland", "stale", "greasy", "burnt", "soggy", "overcooked", "undercooked", "dry", "mushy", "bitter", "slimy", "rubbery", "gritty", "chalky", "stringy", "metallic", "fishy", "spongy", "gelatinous", "foamy", "moist"
@@ -179,8 +179,8 @@ abstract class Person {
                     String foodItem = verbs[(int)(Math.random()*verbs.length)] + " " + foods[(int)(Math.random()*foods.length)];
                     System.out.println(name + " finds and eats a " + foodItem +"!");
 
-                    // adds random int (5-20) to satiation
-                    this.satiation = startSatiation + (int)(Math.random()*(20-5+1)+5);
+                    // adds random int (5-30) to satiation
+                    this.satiation = startSatiation + (int)(Math.random()*(50-5+1)+5);
 
                     // notifies user of increase
                     System.out.println("\tSatiation: " + startSatiation + " +" + (this.satiation-startSatiation) + " --> " + this.satiation);
@@ -242,8 +242,8 @@ abstract class Person {
                 }
                 break;
         }
-        this.satiation = startSatiation - (int)(Math.random()*(10-1+1)+1);
-        System.out.println("\tEnergy: " + startSatiation + " -" + (startSatiation-this.satiation) + " --> " + this.satiation);
+        this.energy = startEnergy - (int)(Math.random()*(10-1+1)+1);
+        System.out.println("\tEnergy: " + startEnergy + " -" + (startEnergy-this.energy) + " --> " + this.energy);
     }
 
     /**
@@ -305,6 +305,9 @@ abstract class Person {
             this.health -= zombieAttack;
             totalDamage += zombieAttack;
             energyLoss += 2;
+            if (Main.checkDeath(this,day)){
+                break;
+            }
             int playerAttack = (int)(this.weapon.getDamage()*(0.5*Math.random()+0.75));
             System.out.print(this.name + " attacks!\n\tZombie's Health: "+zombie.getHealth()+" -" + playerAttack);
             input.nextLine();
