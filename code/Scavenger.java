@@ -17,8 +17,7 @@ class Scavenger extends Person{
      */
     public void scavengeBassProShops() {
 
-        System.out.println(this.getName() + " enters Walmart.");
-        int startHealth = this.getHealth();
+        System.out.println(this.getName() + " enters Bass Pro Shops.");
         int startEnergy = this.getEnergy();
         int startSatiation = this.getSatiation();
 
@@ -31,7 +30,7 @@ class Scavenger extends Person{
         // split outputs based on what player is looking for
         switch (response){
             case 1:
-                if (Math.random() < 0.8){
+                if (Math.random() < 0.9){
                     // initialize arrays for random food generation
                     String[] verbs = {
                             "delicious", "savory", "flavorful", "tasty", "fresh", "juicy", "crispy", "tender", "rich", "sweet", "bland", "stale", "greasy", "burnt", "soggy", "overcooked", "undercooked", "dry", "mushy", "bitter", "slimy", "rubbery", "gritty", "chalky", "stringy", "metallic", "fishy", "spongy", "gelatinous", "foamy", "moist"
@@ -44,7 +43,7 @@ class Scavenger extends Person{
                     System.out.println(this.getName() + " finds and eats a " + foodItem +"!");
 
                     // adds random int (5-30) to satiation
-                    this.setSatiation(startSatiation + (int)((1-Math.pow(Math.random(),2))*(50-5+1)+5));
+                    this.setSatiation(startSatiation + (int)((1-Math.pow(Math.random(),2))*(30-5+1)+5));
 
                     // notifies user of increase
                     System.out.println("\tSatiation: " + startSatiation + " +" + (this.getSatiation()-startSatiation) + " --> " + this.getSatiation());
@@ -54,7 +53,7 @@ class Scavenger extends Person{
                 }
                 break;
             case 2:
-                if (Math.random() < 0.7){
+                if (Math.random() < 0.85){
                     Weapon bassProWeapon = new Weapon((int)(((1-Math.pow(Math.random(),2))+0.5)*(5*Math.log(day)+7)));
                     System.out.println(this.getName() + " has found a weapon!");
                     System.out.println("Current weapon:");
@@ -62,7 +61,6 @@ class Scavenger extends Person{
                     System.out.println("Found weapon:");
                     bassProWeapon.weaponInfo();
                     System.out.println("Would you like to switch? ");
-                    input.nextLine();
                     String switchResponse = input.nextLine();
                     switch (switchResponse){
                         case "Yes", "yes", "y":

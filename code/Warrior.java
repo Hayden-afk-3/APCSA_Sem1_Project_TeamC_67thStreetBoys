@@ -16,6 +16,59 @@ class Warrior extends Person{
      * Hunts for food
      */
     public void huntForFood() {
+        if (!vegan){
+            System.out.println(this.getName() + " goes out to hunt for food.");
+            int startEnergy = this.getEnergy();
+            int startSatiation = this.getSatiation();
+            int startHealth = this.getHealth();
+            String[] huntedAnimals = {
+                "cottontail rabbit","jackrabbit","ground squirrel","tree squirrel","black-tailed jackrabbit","mourning dove","band-tailed pigeon","California quail","mountain quail","ring-necked pheasant","mallard duck","wood duck","green-winged macaw","Canada goose","snow goose","wild turkey","plains coyote","desert coyote","gray fox","feral hog","wild boar","pronghorn antelope","black-tailed deer","mule deer","white-tailed deer","black bear","Rocky Mountain elk","Shiras moose"
+            };
+            int seed = this.getWeapon().getDamage();
+            if (seed>huntedAnimals.length-1){
+                seed = huntedAnimals.length-1;
+            }
+            seed = (int)(Math.random()*(seed-0+1+0));
+            String foodItem = huntedAnimals[seed];
+            if (Math.random()<0.01){
+                System.out.println("You find a " + foodItem + ", and for a long moment the world seems to hold its breath.");
+                input.nextLine();
+                System.out.println("The " + foodItem + " stands there alive, unaware of the meaning you have already given it.");
+                input.nextLine();
+                System.out.println("Yet something in you resists.");
+                input.nextLine();
+                System.out.println("The weight of the days you've endured, the violence you've already accepted as necessary, hits you in your chest.");
+                input.nextLine();
+                System.out.println("You realize that survival should not demand the erasure of mercy, and that not every life must be taken simply because it can be.");
+                input.nextLine();
+                System.out.println("In this quiet pause, you choose restraint over instinct, compassion over need.");
+                input.nextLine();
+                System.out.println("You lower your " + this.getWeapon().getName() + ", step back, and allow the " + foodItem + " to disappear into the forest.");
+                input.nextLine();
+                System.out.println("For once, the apocalypse does not claim another heartbeat. " + this.getName() + "lets the " + foodItem + " go free.");
+                System.out.println("\nYou gain no satiation, but gain some satisfaction.");
+                System.out.println("\nYou are now a pacifist towards animals. You will no longer be able to hunt for food.");
+                vegan = true;
+                activityListClass = new String[] {};
+                activityListExplainClass = new String[] {};
+            }
+            else {
+                this.setSatiation(startSatiation+seed+(int)(Math.random()*(5-0+1)+0));
+                this.setEnergy(startEnergy-(int)(Math.random()*(10-5+1+5)));
+                System.out.println("You find, hunt, and eat an entire " + foodItem + ".");
+                System.out.println("\tSatiation: " + startSatiation + " +" + (this.getSatiation()-startSatiation) + " --> " + this.getSatiation());
+                if (Math.random()<0.1){
+                    System.out.println("You catch food poisoning from eating the " + foodItem + " raw.");
+                    this.setHealth(startHealth/5);
+                    System.out.println("\tHealth: " + startHealth + " -" + (startHealth-this.getHealth()) + " --> " + this.getHealth());
+                }
+                else if (Math.random()<0.01){
+                    System.out.println("You catch salmonella from eating the " + foodItem + " raw.");
+                    this.setHealth(startHealth/5);
+                    System.out.println("\tHealth: " + startHealth + " -" + (startHealth-this.getHealth()) + " --> " + this.getHealth());
+                }
+            }
+        }
     }
     
     /**

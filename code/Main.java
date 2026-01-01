@@ -70,15 +70,14 @@ public class Main {
 
             // activity choice is parsed into it's respective method
             player.parseActivity(choice);
-            // continueGame();
+            continueGame();
             player.zombieFight(day);
 
             // if player died from zombie fight, break loop
-            if (player.getHealth()<=0){
-                System.out.println(player.getName()+" has ran out of health! \nThey fell over and died from their injuries on Day " + day + ".");
+            if (checkDeath(player,day)){
                 break;
             }
-            continueGameQuick();
+            continueGame();
             
             // player sleep method increases stats and day increments
             player.sleep();
@@ -86,7 +85,9 @@ public class Main {
             day++;
         }
         input.close();
+        System.out.println("You survived until Day " + day + ".");
     }
+
 
     /**
     * clears the console
@@ -102,14 +103,6 @@ public class Main {
     public static void continueGame(){
         System.out.print("Press Enter to continue...");
         // String consumeResponse = input.nextLine();
-        input.nextLine();
-        clear();
-    }
-    /**
-     * pauses game until user presses enter, without extra input safety net
-     */
-    public static void continueGameQuick(){
-        System.out.print("Press Enter to continue...");
         input.nextLine();
         clear();
     }

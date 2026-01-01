@@ -13,6 +13,7 @@ abstract class Person {
     private int satiation;
     private Weapon weapon;
     public int day;
+    public boolean vegan = false;
     public static String[] activityList = {"Scavenge Walmart","Take a Nap"};
     public static String[] activityListExplain = {"Attempt to loot a walmart.","Regain Energy"};
 
@@ -113,6 +114,9 @@ abstract class Person {
      */
     public void setHealth(int newHealth){
         this.health = newHealth;
+        if (this.health>99){
+            this.health=99;
+        }
     }
 
     /**
@@ -121,6 +125,9 @@ abstract class Person {
      */
     public void setEnergy(int newEnergy){
         this.energy = newEnergy;
+        if (this.energy>99){
+            this.energy=99;
+        }
     }
 
     /**
@@ -135,7 +142,7 @@ abstract class Person {
 
         this.energy = (int)(Math.random()*((this.energy/2.0+49)-this.energy+1)+this.energy);
         this.health = (int)(Math.random()*(-0.0109*(this.health-100)*(this.health-100)+99-this.health+1)+this.health);
-        this.satiation = (int)(Math.random()*(0.8*(this.satiation-10)-this.satiation+1)+this.satiation);
+        this.satiation = (int)(Math.random()*(1*(this.satiation-10)-this.satiation+1)+this.satiation);
 
         System.out.println(this.name + " feels rested.");
         System.out.println("\tHealth: " + startHealth + " +" + (this.health-startHealth) + " --> " + this.health);
@@ -150,6 +157,9 @@ abstract class Person {
      */
     public void setSatiation(int newSatiation){
         this.satiation = newSatiation;
+        if (this.satiation>99){
+            this.satiation=99;
+        }
     }
 
     /**
@@ -169,7 +179,7 @@ abstract class Person {
         // split outputs based on what player is looking for
         switch (response){
             case 1:
-                if (Math.random() < 0.9){
+                if (Math.random() < 0.95){
                     // initialize arrays for random food generation
                     String[] verbs = {
                             "delicious", "savory", "flavorful", "tasty", "fresh", "juicy", "crispy", "tender", "rich", "sweet", "bland", "stale", "greasy", "burnt", "soggy", "overcooked", "undercooked", "dry", "mushy", "bitter", "slimy", "rubbery", "gritty", "chalky", "stringy", "metallic", "fishy", "spongy", "gelatinous", "foamy", "moist"
@@ -181,8 +191,8 @@ abstract class Person {
                     String foodItem = verbs[(int)(Math.random()*verbs.length)] + " " + foods[(int)(Math.random()*foods.length)];
                     System.out.println(name + " finds and eats a " + foodItem +"!");
 
-                    // adds random int (5-30) to satiation
-                    this.satiation = startSatiation + (int)(Math.random()*(50-5+1)+5);
+                    // adds random int (5-20) to satiation
+                    this.setSatiation(startSatiation + (int)(Math.random()*(20-5+1)+5));
 
                     // notifies user of increase
                     System.out.println("\tSatiation: " + startSatiation + " +" + (this.satiation-startSatiation) + " --> " + this.satiation);
@@ -192,7 +202,7 @@ abstract class Person {
                 }
                 break;
             case 2:
-                if (Math.random() < 0.3){
+                if (Math.random() < 0.6){
                     Weapon walmartWeapon = new Weapon((int)((Math.random()+0.5)*(5*Math.log(day)+5)));
                     System.out.println(name + " has found a weapon!");
                     System.out.println("Current weapon:");
@@ -200,8 +210,8 @@ abstract class Person {
                     System.out.println("Found weapon:");
                     walmartWeapon.weaponInfo();
                     System.out.println("Would you like to switch? ");
-                    input.nextLine();
                     String switchResponse = input.nextLine();
+                    Main.clear();
                     switch (switchResponse){
                         case "Yes", "yes", "y":
                             System.out.println("You are now the proud owner of a " + walmartWeapon.getName() + "!");
@@ -211,14 +221,13 @@ abstract class Person {
                             System.out.println("You drop the weapon on the ground and forget about it.");
                             break;
                     }
-
                 }
                 else {
                     System.out.println(name + " finds nothing but empty shelves and decides to go home.");
                 }
                 break;
             case 3:
-                if (Math.random() < 0.5){
+                if (Math.random() < 0.75){
                     // initialize arrays for random drug generation
                     String[] verbs = {
                             "sealed", "unsealed", "cracked", "broken", "dusty", "clean", "sticky", "rusted", "half-empty", "full", "moist", "intact", "unlabeled", "expired", "torn", "smashed", "moldy", "water-damaged", "warped", "pristine"
@@ -234,7 +243,7 @@ abstract class Person {
                     System.out.println(name + " finds a " + drugItem +" and swallows one!");
 
                     // adds random int (5-20) to satiation
-                    this.health = startHealth + (int)(Math.pow(Math.random(),2)*(50-5+1)+5);
+                    this.setHealth(startHealth + (int)(Math.pow(Math.random(),2)*(50-5+1)+5));
 
                     // notifies user of increase
                     System.out.println("\tHealth: " + startHealth + " +" + (this.health-startHealth) + " --> " + this.health);
@@ -244,7 +253,7 @@ abstract class Person {
                 }
                 break;
         }
-        this.energy = startEnergy - (int)(Math.random()*(10-1+1)+1);
+        this.setEnergy(startEnergy - (int)(Math.random()*(10-1+1)+1));
         System.out.println("\tEnergy: " + startEnergy + " -" + (startEnergy-this.energy) + " --> " + this.energy);
     }
 
@@ -257,9 +266,8 @@ abstract class Person {
         int startEnergy = this.energy;
         int startHealth = this.health;
 
-        this.energy = (int)(Math.random()*((this.energy/2.0+49)-this.energy+1)+this.energy);
-        this.health = (int)(Math.random()*(-0.0109*(this.health-100)*(this.health-100)+99-this.health+1)+this.health);
-        this.satiation = (int)(Math.random()*(0.85*(this.satiation-10)-this.satiation+1)+this.satiation);
+        this.setEnergy((int)(Math.random()*((this.energy/2.0+49)-this.energy+1)+this.energy));
+        this.setHealth((int)(Math.random()*(-0.0109*(this.health-100)*(this.health-100)+99-this.health+1)+this.health));
 
         System.out.println(this.name + " feels rested.");
         System.out.println("\tHealth: " + startHealth + " +" + (this.health-startHealth) + " --> " + this.health);
@@ -311,6 +319,9 @@ abstract class Person {
                 break;
             }
             int playerAttack = (int)(this.weapon.getDamage()*(0.5*Math.random()+0.75));
+            if (playerAttack>zombie.getHealth()){
+                playerAttack = zombie.getHealth();
+            }
             System.out.print(this.name + " attacks!\n\tZombie's Health: "+zombie.getHealth()+" -" + playerAttack);
             input.nextLine();
             zombie.setHealth(zombie.getHealth()-playerAttack);
