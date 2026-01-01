@@ -15,7 +15,7 @@ abstract class Person {
     public int day;
     public boolean vegan = false;
     public static String[] activityList = {"Scavenge Walmart","Take a Nap"};
-    public static String[] activityListExplain = {"Attempt to loot a walmart.","Regain Energy"};
+    public static String[] activityListExplain = {"Attempt to loot a Walmart.","Regain Energy"};
 
     // initialize abstract methods to be implemented specifically in subclasses
     public abstract String[] getActivityListClass();
@@ -140,12 +140,17 @@ abstract class Person {
         int startHealth = this.health;
         int startSatiation = this.satiation;
 
-        this.energy = (int)(Math.random()*((this.energy/2.0+49)-this.energy+1)+this.energy);
+        this.energy = (int)(Math.random()*((this.energy+10)-this.energy+1)+this.energy);
         this.health = (int)(Math.random()*(-0.0109*(this.health-100)*(this.health-100)+99-this.health+1)+this.health);
         this.satiation = (int)(Math.random()*(1*(this.satiation-10)-this.satiation+1)+this.satiation);
 
         System.out.println(this.name + " feels rested.");
-        System.out.println("\tHealth: " + startHealth + " +" + (this.health-startHealth) + " --> " + this.health);
+        if (this.health<startHealth){
+            System.out.println("\tHealth: " + startHealth + " -" + (startHealth-this.health) + " --> " + this.health);
+        }
+        else{
+            System.out.println("\tHealth: " + startHealth + " +" + (this.health-startHealth) + " --> " + this.health);
+        }
         System.out.println("\tEnergy: " + startEnergy + " +" + (this.energy-startEnergy) + " --> " + this.energy);
         System.out.println("\tSatiation: " + startSatiation + " -" + (startSatiation-this.satiation) + " --> " + this.satiation);
         day++;
@@ -253,7 +258,7 @@ abstract class Person {
                 }
                 break;
         }
-        this.setEnergy(startEnergy - (int)(Math.random()*(10-1+1)+1));
+        this.setEnergy(startEnergy - (int)(Math.random()*(30-1+1)+1));
         System.out.println("\tEnergy: " + startEnergy + " -" + (startEnergy-this.energy) + " --> " + this.energy);
     }
 
@@ -266,7 +271,7 @@ abstract class Person {
         int startEnergy = this.energy;
         int startHealth = this.health;
 
-        this.setEnergy((int)(Math.random()*((this.energy/2.0+49)-this.energy+1)+this.energy));
+        this.setEnergy((int)(Math.random()*((this.energy+10)-this.energy+1)+this.energy));
         this.setHealth((int)(Math.random()*(-0.0109*(this.health-100)*(this.health-100)+99-this.health+1)+this.health));
 
         System.out.println(this.name + " feels rested.");
@@ -300,11 +305,10 @@ abstract class Person {
         int energyLoss = 0;
         System.out.println(this.name + " ran into a zombie!");
         if (day <= 5){
-            //String consumeResponse = input.nextLine();
             System.out.print("Use your Enter key to move through the interaction! ");
             input.nextLine();
         }
-        Zombie zombie = new Zombie((int)(5*Math.log(day)+4),(int)(4*Math.log(day)+2));
+        Zombie zombie = new Zombie((int)(7*Math.log(day)+7),(int)(5*Math.log(day)+8));
         while (zombie.getHealth()>0){
             int zombieAttack = (int)(zombie.getDamage()*(0.5*Math.random()+0.75));
             if (this.health-zombieAttack<0){
@@ -329,5 +333,28 @@ abstract class Person {
         System.out.println(this.name + " killed the zombie!");
         System.out.println("\tHealth: " + startHealth + " -" + totalDamage + " --> " + this.health);
         System.out.println("\tEnergy: " + this.energy + " -" + energyLoss + " --> " + (this.energy-energyLoss));
+    }
+/**
+     * checks if player is dead
+     * @param player the player object
+     * @param day the current day
+     * @return true if player is dead, false otherwise
+     */
+    public boolean checkDeath(int day){
+        if (this.getHealth()<=0){
+            System.out.println(this.name+" has ran out of health! \n" + this.name + " falls over and dies from their injuries.");
+            return true;
+        }
+        else if (this.getSatiation()<=0){
+            System.out.println(this.name+" has ran out of satiation! \n" + this.name + " falls over and dies from starvation.");
+            return true;
+        }
+        else if (this.getEnergy()<=0){
+            System.out.println(this.name+" has ran out of energy! \n" + this.name + " falls over and dies from being exhausted.");
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }

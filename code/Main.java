@@ -7,44 +7,76 @@ public class Main {
     private static final Scanner input = new Scanner(System.in);
 
     public static void main(String[] args) {
-        // initialize variables
-        int day = 1;
-        int choice;
-
-        // grab name from user
-        System.out.print("Enter your name: ");
-        String name = input.nextLine();
-        clear();
-
-        // grabs role from user and verifies input
-        System.out.println("What character do you want to be?");
-        System.out.println("1. Scavenger\n2. Medic\n3. Warrior");
-        int role = input.nextInt();
-        // consume /n
-        input.nextLine();
-        while (role != 1 && role != 2 && role != 3) {
-            System.out.println("Invalid input. Please enter 1, 2, or 3.");
-            role = input.nextInt();
-            // consume /n
-            input.nextLine();
-        }
-
         // sets up null player so there's no errors relating to possibly not setting player type
         Person player = null;
-        
-        // switch case that uses each role's constructor to set player type
-        switch (role) {
-            case 1:
-                player = new Scavenger(name);
-                break;
+        int day = 1;
+
+        System.out.println("1. New Game\n2. Load Game");
+        int gameChoice = input.nextInt();
+        // consume /n
+        input.nextLine();
+        clear();
+        switch (gameChoice) {
             case 2:
-                player = new Medic(name);
+                // Load Game logic
                 break;
-            case 3:
-                player = new Warrior(name);
+            default:
+                // grab name from user
+                System.out.print("Enter your name: ");
+                String name = input.nextLine();
+                clear();
+
+                // grabs role from user and verifies input
+                System.out.println("What character do you want to be?");
+                System.out.println("1. Scavenger\n2. Medic\n3. Warrior");
+                int role = input.nextInt();
+                // consume /n
+                input.nextLine();
+                while (role != 1 && role != 2 && role != 3) {
+                    System.out.println("Invalid input. Please enter 1, 2, or 3.");
+                    role = input.nextInt();
+                    // consume /n
+                    input.nextLine();
+                }
+                        // switch case that uses each role's constructor to set player type
+                switch (role) {
+                    case 1:
+                        player = new Scavenger(name);
+                        break;
+                    case 2:
+                        player = new Medic(name);
+                        break;
+                    case 3:
+                        player = new Warrior(name);
+                        break;
+                }
+                clear();
+
+                // switch case that uses each role's constructor to set player type
+                switch (role) {
+                    case 1:
+                        player = new Scavenger(name);
+                        break;
+                    case 2:
+                        player = new Medic(name);
+                        break;
+                    case 3:
+                        player = new Warrior(name);
+                        break;
+                }
+                clear();
+
+                // player gets assigned weapon
+                System.out.println(player.getName() + " has found a weapon!");
+                player.setWeapon(new Weapon(5));
+                player.getWeapon().weaponInfo();
+                continueGame();
                 break;
         }
-        clear();
+
+        // initialize variables
+        
+        
 
         // player gets assigned weapon
         System.out.println(player.getName() + " has found a weapon!");
@@ -64,7 +96,7 @@ public class Main {
             player.personStatus();
             player.printActivityList();
             System.out.print("Activity #: ");
-            choice = input.nextInt();
+            int choice = input.nextInt();
             // consume /n
             input.nextLine();
 
@@ -114,15 +146,15 @@ public class Main {
      */
     public static boolean checkDeath(Person player, int day){
         if (player.getHealth()<=0){
-            System.out.println(player.getName()+" has ran out of health! \nThey fell over and died from their injuries on Day " + day + ".");
+            System.out.println(player.getName()+" has ran out of health! \n" + player.getName() + " falls over and dies from their injuries.");
             return true;
         }
         else if (player.getSatiation()<=0){
-            System.out.println(player.getName()+" has ran out of satiation! \nThey fell over and died from starvation on Day " + day + ".");
+            System.out.println(player.getName()+" has ran out of satiation! \n" + player.getName() + " falls over and dies from starvation.");
             return true;
         }
         else if (player.getEnergy()<=0){
-            System.out.println(player.getName()+" has ran out of energy! \nThey fell over and died from being exhausted on Day " + day + ".");
+            System.out.println(player.getName()+" has ran out of energy! \n" + player.getName() + " falls over and dies from being exhausted.");
             return true;
         }
         else{

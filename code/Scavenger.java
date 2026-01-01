@@ -78,7 +78,7 @@ class Scavenger extends Person{
                 }
                 break;
         }
-        this.setEnergy(startEnergy - (int)(Math.random()*(10-1+1)+1));
+        this.setEnergy(startEnergy - (int)(Math.random()*(35-1+1)+1));
         System.out.println("\tEnergy: " + startEnergy + " -" + (startEnergy-this.getEnergy()) + " --> " + this.getEnergy());
     }
 
