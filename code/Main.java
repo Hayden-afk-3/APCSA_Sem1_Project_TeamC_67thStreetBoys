@@ -19,8 +19,9 @@ public class Main {
         clear();
         switch (gameChoice) {
             case 2:
-                // day_role_health_satiation_energy_weaponAdjective_weaponWeapon_weaponVerb_weaponDamage_vegan_name_
-                // example: 2_1_84_58_97_7_20_23_5_0_Cooper
+                // all encoded in base 9
+                // day9role9health9satiation9energy9weaponAdjective9weaponWeapon9weaponVerb9weaponDamage9vegan9name9
+                // example: 29298195091209529591495909Cooper
                 String saveDay = "";
                 String saveRole = "";
                 String saveHealth = "";
@@ -37,61 +38,61 @@ public class Main {
                 System.out.print("Enter your saved game string: ");
                 String savedGameString = input.nextLine();
 
-                while (savedGameString.charAt(currentIndex) != '_'){
+                while (savedGameString.charAt(currentIndex) != '9'){
                     saveDay += savedGameString.charAt(currentIndex);
                     currentIndex++;
                 }
                 currentIndex++;
 
-                while (savedGameString.charAt(currentIndex) != '_'){
+                while (savedGameString.charAt(currentIndex) != '9'){
                     saveRole += savedGameString.charAt(currentIndex);
                     currentIndex++;
                 }
                 currentIndex++;
 
-                while (savedGameString.charAt(currentIndex) != '_'){
+                while (savedGameString.charAt(currentIndex) != '9'){
                     saveHealth += savedGameString.charAt(currentIndex);
                     currentIndex++;
                 }
                 currentIndex++;
 
-                while (savedGameString.charAt(currentIndex) != '_'){
+                while (savedGameString.charAt(currentIndex) != '9'){
                     saveSatiation += savedGameString.charAt(currentIndex);
                     currentIndex++;
                 }
                 currentIndex++;
 
-                while (savedGameString.charAt(currentIndex) != '_'){
+                while (savedGameString.charAt(currentIndex) != '9'){
                     saveEnergy += savedGameString.charAt(currentIndex);
                     currentIndex++;
                 }
                 currentIndex++;
 
-                while (savedGameString.charAt(currentIndex) != '_'){
+                while (savedGameString.charAt(currentIndex) != '9'){
                     saveWeaponAdjective += savedGameString.charAt(currentIndex);
                     currentIndex++;
                 }
                 currentIndex++;
 
-                while (savedGameString.charAt(currentIndex) != '_'){
+                while (savedGameString.charAt(currentIndex) != '9'){
                     saveWeaponWeapon += savedGameString.charAt(currentIndex);
                     currentIndex++;
                 }
                 currentIndex++;
 
-                while (savedGameString.charAt(currentIndex) != '_'){
+                while (savedGameString.charAt(currentIndex) != '9'){
                     saveWeaponVerb += savedGameString.charAt(currentIndex);
                     currentIndex++;
                 }
                 currentIndex++;
 
-                while (savedGameString.charAt(currentIndex) != '_'){
+                while (savedGameString.charAt(currentIndex) != '9'){
                     saveWeaponDamage += savedGameString.charAt(currentIndex);
                     currentIndex++;
                 }
                 currentIndex++;
 
-                while (savedGameString.charAt(currentIndex) != '_'){
+                while (savedGameString.charAt(currentIndex) != '9'){
                     saveVegan += savedGameString.charAt(currentIndex);
                     currentIndex++;
                 }
@@ -101,19 +102,19 @@ public class Main {
                     saveName += savedGameString.charAt(currentIndex);
                     currentIndex++;
                 }
-                
+
                 switch (saveRole) {
                     case "1":
-                        player = new Scavenger(Integer.valueOf(saveDay), Integer.valueOf(saveHealth), Integer.valueOf(saveSatiation), Integer.valueOf(saveEnergy), Integer.valueOf(saveVegan), saveName);
+                        player = new Scavenger(Binary.decode(saveDay,9), Binary.decode(saveHealth,9), Binary.decode(saveSatiation,9), Binary.decode(saveEnergy,9), Binary.decode(saveVegan,9), saveName);
                         break;
                     case "2":
-                        player = new Medic(Integer.valueOf(saveDay), Integer.valueOf(saveHealth), Integer.valueOf(saveSatiation), Integer.valueOf(saveEnergy), Integer.valueOf(saveVegan), saveName);
+                        player = new Medic(Binary.decode(saveDay,9), Binary.decode(saveHealth,9), Binary.decode(saveSatiation,9), Binary.decode(saveEnergy,9), Binary.decode(saveVegan,9), saveName);
                         break;
                     case "3":
-                        player = new Warrior(Integer.valueOf(saveDay), Integer.valueOf(saveHealth), Integer.valueOf(saveSatiation), Integer.valueOf(saveEnergy), Integer.valueOf(saveVegan), saveName);
+                        player = new Warrior(Binary.decode(saveDay,9), Binary.decode(saveHealth,9), Binary.decode(saveSatiation,9), Binary.decode(saveEnergy,9), Binary.decode(saveVegan,9), saveName);
                         break;
                 }
-                player.setWeapon(new Weapon(Integer.valueOf(saveWeaponAdjective), Integer.valueOf(saveWeaponWeapon), Integer.valueOf(saveWeaponVerb), Integer.valueOf(saveWeaponDamage)));
+                player.setWeapon(new Weapon(Binary.decode(saveWeaponAdjective,9), Binary.decode(saveWeaponWeapon,9), Binary.decode(saveWeaponVerb,9), Binary.decode(saveWeaponDamage,9)));
                 clear();
             break;
             case 1:
@@ -176,6 +177,7 @@ public class Main {
                 break;
             }
 
+
             // daily activities
             System.out.println("Day " + player.getDay());
             player.personStatus();
@@ -204,28 +206,6 @@ public class Main {
             player.sleep();
             continueGame();
 
-            System.out.println("Would you like to quit your game?");
-            boolean quitGame = false;
-            switch (input.nextLine()) {
-                case "Yes", "yes", "y":
-                    quitGame = true;
-                    String gameString = encodeGame(player);
-                    System.out.println("Game saved! Encoded string:");
-                    System.out.println(gameString);
-                    break;
-                case "No", "no", "n":
-                    quitGame = false;
-                    clear();
-                    break;
-                default:
-                    quitGame = false;
-                    clear();
-                    break;
-            }
-            //continueGame();
-            if (quitGame){
-                break;
-            }
         }
         input.close();
     }
@@ -256,19 +236,20 @@ public class Main {
      */
     public static String encodeGame(Person player){
         String returnString = "";
-        // day_role_health_satiation_energy_weaponNameEncode_weaponDamage_vegan_name
-        returnString += player.getDay() + "_";
-        returnString += player.getRole() + "_";
-        returnString += player.getHealth() + "_";
-        returnString += player.getSatiation() + "_";
-        returnString += player.getEnergy() + "_";
-        returnString += player.getWeapon().encodeWeaponName() + "_";
-        returnString += player.getWeapon().getDamage() + "_";
+        // all encoded into base 9
+        // day9role9health9satiation9energy9weaponNameEncode9weaponDamage9vegan9name
+        returnString += Binary.encode(player.getDay(),9) + "9";
+        returnString += Binary.encode(player.getRole(),9) + "9";
+        returnString += Binary.encode(player.getHealth(),9) + "9";
+        returnString += Binary.encode(player.getSatiation(),9) + "9";
+        returnString += Binary.encode(player.getEnergy(),9) + "9";
+        returnString += player.getWeapon().encodeWeaponName() + "9";
+        returnString += Binary.encode(player.getWeapon().getDamage(),9) + "9";
         if (player.getVegan()){
-            returnString += "1_";
+            returnString += "19";
         }
         else {
-            returnString += "0_";
+            returnString += "09";
         }
         returnString += player.getName();
         return returnString;

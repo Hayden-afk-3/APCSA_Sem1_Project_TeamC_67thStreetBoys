@@ -83,6 +83,6 @@ public class Weapon {
      * @return encoded weapon name
      */
     public String encodeWeaponName(){
-        return adjectiveChoice + "_" + weaponChoice + "_" + verbChoice;
+        return Binary.encode(adjectiveChoice,9) + "9" + Binary.encode(weaponChoice,9) + "9" + Binary.encode(verbChoice,9);
     }
 }
