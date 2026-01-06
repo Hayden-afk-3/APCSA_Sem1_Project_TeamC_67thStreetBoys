@@ -57,8 +57,7 @@ class Scavenger extends Person{
                     String foodItem = verbs[(int)(Math.random()*verbs.length)] + " " + foods[(int)(Math.random()*foods.length)];
                     System.out.println(this.getName() + " finds and eats a " + foodItem +"!");
 
-                    // adds random int (5-30) to satiation
-                    this.setSatiation(startSatiation + (int)((1-Math.pow(Math.random(),2))*(30-5+1)+5));
+                    this.setSatiation(startSatiation + Balance.bassProShopsFoodSatiation());
 
                     // notifies user of increase
                     System.out.println("\tSatiation: " + startSatiation + " +" + (this.getSatiation()-startSatiation) + " --> " + this.getSatiation());
@@ -69,7 +68,7 @@ class Scavenger extends Person{
                 break;
             case 2:
                 if (Math.random() < 0.85){
-                    Weapon bassProWeapon = new Weapon((int)(((1-Math.pow(Math.random(),2))+0.5)*(5*Math.log(this.getDay())+7)));
+                    Weapon bassProWeapon = new Weapon(Balance.bassProShopsWeaponDamage(this.getDay()));
                     System.out.println(this.getName() + " has found a weapon!");
                     System.out.println("Current weapon:");
                     this.getWeapon().weaponInfo();
@@ -93,7 +92,7 @@ class Scavenger extends Person{
                 }
                 break;
         }
-        this.setEnergy(startEnergy - (int)(Math.random()*(35-1+1)+1));
+        this.setEnergy(startEnergy - Balance.bassProShopsEnergyLoss());
         System.out.println("\tEnergy: " + startEnergy + " -" + (startEnergy-this.getEnergy()) + " --> " + this.getEnergy());
     }
 

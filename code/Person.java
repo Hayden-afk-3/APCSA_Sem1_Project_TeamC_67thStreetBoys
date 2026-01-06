@@ -166,9 +166,9 @@ abstract class Person {
         int startHealth = this.health;
         int startSatiation = this.satiation;
 
-        this.setEnergy((int)(Math.random()*((this.energy+10)-this.energy+1)+this.energy));
-        this.setHealth((int)(Math.random()*(-0.0109*(this.health-100)*(this.health-100)+99-this.health+1)+this.health));
-        this.setSatiation((int)(Math.random()*(1*(this.satiation-10)-this.satiation+1)+this.satiation));
+        this.setEnergy(Balance.sleepEnergy(this.energy));
+        this.setHealth(Balance.sleepHealth(this.health));
+        this.setSatiation(Balance.sleepSatiation(this.satiation));
 
         System.out.println(this.name + " feels rested.");
         if (this.health<startHealth){
@@ -254,7 +254,7 @@ abstract class Person {
                     System.out.println(name + " finds and eats a " + foodItem +"!");
 
                     // adds random int (5-20) to satiation
-                    this.setSatiation(startSatiation + (int)(Math.random()*(20-5+1)+5));
+                    this.setSatiation(startSatiation + Balance.walmartFoodSatiation());
 
                     // notifies user of increase
                     System.out.println("\tSatiation: " + startSatiation + " +" + (this.satiation-startSatiation) + " --> " + this.satiation);
@@ -265,7 +265,7 @@ abstract class Person {
                 break;
             case 2:
                 if (Math.random() < 0.6){
-                    Weapon walmartWeapon = new Weapon((int)((Math.random()+0.5)*(5*Math.log(day)+5)));
+                    Weapon walmartWeapon = new Weapon(Balance.walmartWeaponDamage(day));
                     System.out.println(name + " has found a weapon!");
                     System.out.println("Current weapon:");
                     weapon.weaponInfo();
@@ -304,8 +304,7 @@ abstract class Person {
                     String drugItem = verbs[(int)(Math.random()*verbs.length)] + " " + containers[(int)(Math.random()*containers.length)] + " of " + drugs[(int)(Math.random()*drugs.length)];
                     System.out.println(name + " finds a " + drugItem +" and swallows one!");
 
-                    // adds random int (5-20) to satiation
-                    this.setHealth(startHealth + (int)(Math.pow(Math.random(),2)*(50-5+1)+5));
+                    this.setHealth(startHealth + Balance.walmartDrugHealth());
 
                     // notifies user of increase
                     System.out.println("\tHealth: " + startHealth + " +" + (this.health-startHealth) + " --> " + this.health);
@@ -315,7 +314,7 @@ abstract class Person {
                 }
                 break;
         }
-        this.setEnergy(startEnergy - (int)(Math.random()*(30-1+1)+1));
+        this.setEnergy(startEnergy - Balance.walmartEnergyLoss());
         System.out.println("\tEnergy: " + startEnergy + " -" + (startEnergy-this.energy) + " --> " + this.energy);
     }
 
@@ -328,8 +327,8 @@ abstract class Person {
         int startEnergy = this.energy;
         int startHealth = this.health;
 
-        this.setEnergy((int)(Math.random()*((this.energy+10)-this.energy+1)+this.energy));
-        this.setHealth((int)(Math.random()*(-0.0109*(this.health-100)*(this.health-100)+99-this.health+1)+this.health));
+        this.setEnergy(Balance.napEnergy(this.energy));
+        this.setHealth(Balance.napHealth(this.health));
 
         System.out.println(this.name + " feels rested.");
         System.out.println("\tHealth: " + startHealth + " +" + (this.health-startHealth) + " --> " + this.health);
@@ -365,9 +364,9 @@ abstract class Person {
             System.out.print("Use your Enter key to move through the interaction! ");
             input.nextLine();
         }
-        Zombie zombie = new Zombie((int)(7*Math.log(day)+7),(int)(5*Math.log(day)+8));
+        Zombie zombie = new Zombie(Balance.zombieHealth(day),Balance.zombieDamage(day));
         while (zombie.getHealth()>0){
-            int zombieAttack = (int)(zombie.getDamage()*(0.5*Math.random()+0.75));
+            int zombieAttack = Balance.zombieAttack(zombie.getDamage());
             if (this.health-zombieAttack<0){
                 break;
             }

@@ -31,7 +31,7 @@ class Medic extends Person{
      * Heals the medic, with console printing
      */
     public void healSelf() {
-        int healAmount = (int)(Math.random()*(6)+3); // 3-8
+        int healAmount = Balance.medicHeal();
         if (healAmount+this.getHealth()>100){
             healAmount=100-this.getHealth();
         }

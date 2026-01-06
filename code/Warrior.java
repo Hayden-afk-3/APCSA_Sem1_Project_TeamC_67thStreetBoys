@@ -45,7 +45,7 @@ class Warrior extends Person{
             }
             seed = (int)(Math.random()*(seed-0+1+0));
             String foodItem = huntedAnimals[seed];
-            if (Math.random()<0.01){
+            if (Math.random()<Balance.huntVeganChance){
                 System.out.println("You find a " + foodItem + ", and for a long moment the world seems to hold its breath.");
                 input.nextLine();
                 System.out.println("The " + foodItem + " stands there alive, unaware of the meaning you have already given it.");
@@ -68,16 +68,16 @@ class Warrior extends Person{
                 activityListExplainClass = new String[] {};
             }
             else {
-                this.setSatiation(startSatiation+seed+(int)(Math.random()*(5-0+1)+0));
+                this.setSatiation(startSatiation+seed+Balance.huntSeedDamageAddition());
                 this.setEnergy(startEnergy-(int)(Math.random()*(10-5+1+5)));
                 System.out.println("You find, hunt, and eat an entire " + foodItem + ".");
                 System.out.println("\tSatiation: " + startSatiation + " +" + (this.getSatiation()-startSatiation) + " --> " + this.getSatiation());
-                if (Math.random()<0.1){
+                if (Math.random()<Balance.huntFoodPoisoningChance){
                     System.out.println("You catch food poisoning from eating the " + foodItem + " raw.");
                     this.setHealth(startHealth/5);
                     System.out.println("\tHealth: " + startHealth + " -" + (startHealth-this.getHealth()) + " --> " + this.getHealth());
                 }
-                else if (Math.random()<0.01){
+                else if (Math.random()<Balance.huntSalmonellaChance){
                     System.out.println("You catch salmonella from eating the " + foodItem + " raw.");
                     this.setHealth(startHealth/5);
                     System.out.println("\tHealth: " + startHealth + " -" + (startHealth-this.getHealth()) + " --> " + this.getHealth());
