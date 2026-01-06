@@ -180,12 +180,16 @@ public class Main {
             System.out.println("Day " + player.getDay());
             player.personStatus();
             player.printActivityList();
-            System.out.print("Activity #: ");
-            int choice = input.nextInt();
-            // consume /n
-            input.nextLine();
+            System.out.print("Activity: ");
+            String choice = input.nextLine();
 
             // activity choice is parsed into it's respective method
+            if (choice.equals("Q")||choice.equals("q")){
+                String gameString = encodeGame(player);
+                System.out.println("Game saved! Encoded string:");
+                System.out.println(gameString);
+                break;
+            }
             player.parseActivity(choice);
             continueGame();
             player.zombieFight();

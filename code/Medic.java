@@ -63,9 +63,10 @@ class Medic extends Person{
      * @param choice activity choice
      */
     @Override
-    public void parseActivity(int choice) {
+    public void parseActivity(String choice) {
+        int intChoice = Integer.parseInt(choice);
         Main.clear();
-        switch (choice) {
+        switch (intChoice) {
             case 1:
                 this.scavengeWalmart();
                 break;

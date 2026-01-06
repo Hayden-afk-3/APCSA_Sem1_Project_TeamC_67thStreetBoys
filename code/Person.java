@@ -22,7 +22,7 @@ abstract class Person {
     // initialize abstract methods to be implemented specifically in subclasses
     public abstract String[] getActivityListClass();
     public abstract String[] getActivityListExplainClass();
-    public abstract void parseActivity(int choice);
+    public abstract void parseActivity(String choice);
 
     /**
      * Constructor for objects of class Person
@@ -215,8 +215,6 @@ abstract class Person {
     public void setVegan(boolean newVegan){
         this.vegan = newVegan;
     }
-    
-    
 
     /**
      * Gets the person's role
@@ -352,11 +350,11 @@ abstract class Person {
             System.out.println("\t" + i + ": " + this.getActivityListClass()[i-1-activityList.length]);
             System.out.println("\t\t" + this.getActivityListExplainClass()[i-1-activityList.length]);
         }
+        System.out.println("\tQ: Quit Game");
     }
 
     /**
      * Simulates a fight between the player and a zombie
-     * @param day the current day, used to scale zombie stats
      */
     public void zombieFight() {
         int startHealth = this.health;
@@ -395,8 +393,6 @@ abstract class Person {
     }
 /**
      * checks if player is dead
-     * @param player the player object
-     * @param day the current day
      * @return true if player is dead, false otherwise
      */
     public boolean checkDeath(){
