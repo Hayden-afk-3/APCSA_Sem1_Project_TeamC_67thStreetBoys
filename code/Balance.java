@@ -21,11 +21,14 @@ public class Balance {
     }
 
     // zombie stats
+    public static double zombieFightChance(int currentDay){
+        return Math.atan(currentDay/5)*2/Math.PI;
+    }
     public static int zombieHealth(int currentDay){
-        return (int)(7*Math.log(currentDay)+7);
+        return (int)((7*Math.log(currentDay)+2)*((0.5*Math.random()+0.75)));
     }
     public static int zombieDamage(int currentDay){
-        return (int)(5*Math.log(currentDay)+8);
+        return (int)((4*Math.log(currentDay)+3)*(0.5*Math.random()+0.75));
     }
     public static int zombieAttack(int zombieDamage){
         return (int)(zombieDamage*(0.5*Math.random()+0.75));
@@ -58,7 +61,7 @@ public class Balance {
 
     // medic stats
     public static int medicHeal(){
-        return (int)(Math.random()*(6)+3);
+        return (int)(Math.random()*(20-5+1)+5);
     }
 
     // warrior stats

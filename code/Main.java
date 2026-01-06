@@ -194,13 +194,15 @@ public class Main {
             }
             player.parseActivity(choice);
             continueGame();
-            player.zombieFight();
+            if (Math.random() <= Balance.zombieFightChance(player.getDay())){
+                player.zombieFight();
 
-            // if player died from zombie fight, break loop
-            if (player.checkDeath()){
-                break;
+                // if player died from zombie fight, break loop
+                if (player.checkDeath()){
+                    break;
+                }
+                continueGame();
             }
-            continueGame();
             
             // player sleep method increases stats and day increments
             player.sleep();
@@ -238,6 +240,7 @@ public class Main {
         String returnString = "";
         // all encoded into base 9
         // day9role9health9satiation9energy9weaponNameEncode9weaponDamage9vegan9name
+        // 393925094691209429692093909Hayden
         returnString += Binary.encode(player.getDay(),9) + "9";
         returnString += Binary.encode(player.getRole(),9) + "9";
         returnString += Binary.encode(player.getHealth(),9) + "9";
