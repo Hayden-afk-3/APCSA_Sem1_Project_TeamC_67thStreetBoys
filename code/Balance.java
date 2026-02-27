@@ -6,18 +6,18 @@ public class Balance {
         return (int)(Math.random()*((currentEnergy+10)-currentEnergy+1)+currentEnergy);
     }
     public static int sleepHealth(int currentHealth){
-        return (int)(Math.random()*(-0.0109*(currentHealth-100)*(currentHealth-100)+99-currentHealth+1)+currentHealth);
+        return (int)(Math.random()*(10+currentHealth-currentHealth+1)+currentHealth);
     }
     public static int sleepSatiation(int currentSatiation){
-        return (int)(Math.random()*(1*(currentSatiation-10)-currentSatiation+1)+currentSatiation);
+        return (int)(Math.random()*(1*(currentSatiation-5)-currentSatiation+1)+currentSatiation);
     }
 
     // nap stats
     public static int napEnergy(int currentEnergy){
-        return (int)(Math.random()*((currentEnergy+10)-currentEnergy+1)+currentEnergy);
+        return (int)(Math.random()*((currentEnergy+20)-currentEnergy+1)+currentEnergy);
     }
     public static int napHealth(int currentHealth){
-        return (int)(Math.random()*(-0.0109*(currentHealth-100)*(currentHealth-100)+99-currentHealth+1)+currentHealth);
+        return (int)(Math.random()*(10+currentHealth-currentHealth+1)+currentHealth);
     }
 
     // zombie stats
@@ -45,7 +45,7 @@ public class Balance {
         return (int)(Math.pow(Math.random(),2)*(50-5+1)+5);
     }
     public static int walmartEnergyLoss(){
-        return (int)(Math.random()*(30-1+1)+1);
+        return (int)(Math.random()*(10-1+1)+1);
     }
 
     // scavenger stats
@@ -56,7 +56,7 @@ public class Balance {
         return (int)((Math.pow(Math.random(),0.5)+0.5)*(5*Math.log(currentDay)+7));
     }
     public static int bassProShopsEnergyLoss(){
-        return (int)(Math.random()*(35-1+1)+1);
+        return (int)(Math.random()*(15-1+1)+1);
     }
 
     // medic stats
